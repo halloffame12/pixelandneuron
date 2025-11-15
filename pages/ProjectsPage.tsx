@@ -16,6 +16,16 @@ const pageTransition = {
 
 const allProjects = [
   {
+    title: 'Portfolio site',
+    category: 'Website',
+    img: 'https://i.postimg.cc/cCKrHxHQ/Screenshot-2025-11-15-173651.png',
+    description: 'A modern and responsive personal portfolio website showcasing my skills, projects, and experience. Built with clean UI design, smooth animations, and optimized layouts to deliver a professional and engaging user experience across all devices',
+    tech: ['Threejs', 'React', 'TypeScript', 'Tailwind CSS'],
+    keyFeatures: ['Fully Responsive Design', 'Modern Clean UI', 'Smooth Animations', 'Fast Loading Performance', 'Project & Skills Showcase'],
+    liveUrl: 'https://sumitchauhandev.netlify.app/',
+    repoUrl: '#',
+  },
+  {
     title: 'CodeCraft AI',
     category: 'AI App',
     img: 'https://i.postimg.cc/k4bZhTCv/codecraft.png',
