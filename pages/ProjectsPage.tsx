@@ -141,7 +141,7 @@ const ProjectsPage: React.FC = () => {
       <AnimatePresence>
         {selectedProject && (
           <motion.div
-            className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center p-4 overflow-y-auto md:overflow-hidden"
+            className="fixed inset-0 z-50 bg-black bg-opacity-90 p-4 md:flex md:items-center md:justify-center overflow-y-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -149,14 +149,14 @@ const ProjectsPage: React.FC = () => {
           >
             <motion.div
               layoutId={`card-container-${selectedProject.title}`}
-              className="relative bg-[#111] border border-[rgb(26,139,157)]/50 rounded-lg overflow-hidden w-full max-w-4xl max-h-full flex flex-col md:flex-row"
+              className="relative bg-[#111] border border-[rgb(26,139,157)]/50 rounded-lg overflow-hidden w-full max-w-4xl flex flex-col md:flex-row"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="w-full md:w-1/2 h-48 sm:h-64 md:h-auto flex-shrink-0">
                 <motion.img layoutId={`card-image-${selectedProject.title}`} src={selectedProject.img} alt={selectedProject.title} className="w-full h-full object-cover" />
               </div>
-              <div className="w-full md:w-1/2 flex flex-col">
-                <div className="p-4 sm:p-6 flex flex-col flex-1 min-h-0 overflow-y-auto">
+              <div className="w-full md:w-1/2 flex flex-col flex-1 min-h-0">
+                <div className="p-4 sm:p-6 flex flex-col flex-1 overflow-y-auto max-h-[calc(100vh-12rem)] md:max-h-none">
                   <motion.h2 layoutId={`card-title-${selectedProject.title}`} className="text-2xl sm:text-3xl font-bold text-[rgb(178,212,48)] mb-2">{selectedProject.title}</motion.h2>
                   <p className="text-base sm:text-lg text-[rgb(26,139,157)] mb-4">{selectedProject.category}</p>
                   <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.2 }}>
@@ -173,15 +173,17 @@ const ProjectsPage: React.FC = () => {
                     </div>
                   </motion.div>
                 </div>
-                <div className="p-4 sm:p-6 border-t border-[rgb(26,139,157)]/20 flex flex-col sm:flex-row gap-4">
-                  <a 
-                    href={selectedProject.liveUrl} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="w-full text-center px-6 py-2 bg-[rgb(26,139,157)] text-white font-semibold rounded-lg hover:bg-[rgb(178,212,48)] hover:text-black transition-all duration-300 flex-1"
-                  >
-                    Visit Live Site
-                  </a>
+                <div className="p-4 sm:p-6 border-t border-[rgb(26,139,157)]/20 flex flex-col sm:flex-row gap-4 shrink-0">
+                  {selectedProject.liveUrl !== '#' && (
+                    <a 
+                      href={selectedProject.liveUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="w-full text-center px-6 py-2 bg-[rgb(26,139,157)] text-white font-semibold rounded-lg hover:bg-[rgb(178,212,48)] hover:text-black transition-all duration-300 flex-1"
+                    >
+                      Visit Live Site
+                    </a>
+                  )}
                   {selectedProject.repoUrl !== '#' && (
                     <a 
                       href={selectedProject.repoUrl} 
@@ -191,6 +193,9 @@ const ProjectsPage: React.FC = () => {
                     >
                       View Repo
                     </a>
+                  )}
+                  {selectedProject.liveUrl === '#' && selectedProject.repoUrl === '#' && (
+                    <p className="text-center text-gray-400 text-sm italic py-2">Coming soon...</p>
                   )}
                 </div>
               </div>
