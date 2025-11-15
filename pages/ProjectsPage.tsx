@@ -87,7 +87,7 @@ const ProjectCard: React.FC<{ project: typeof allProjects[0]; onClick: () => voi
     exit={{ opacity: 0, scale: 0.8 }}
     transition={{ type: 'spring', stiffness: 200, damping: 25 }}
     onClick={onClick}
-    className="relative overflow-hidden rounded-lg cursor-pointer group"
+    className="relative overflow-hidden rounded-lg cursor-pointer group aspect-[4/3] w-full" // FIX: Added aspect ratio for consistent card sizing
   >
     <motion.img layoutId={`card-image-${project.title}`} src={project.img} alt={project.title} className="w-full h-full object-cover" />
     <div className="absolute inset-0 bg-black bg-opacity-50 group-hover:bg-opacity-75 transition-all duration-300 flex flex-col justify-end p-4">
@@ -171,10 +171,25 @@ const ProjectsPage: React.FC = () => {
                     {selectedProject.tech.map(t => <span key={t} className="bg-[rgb(255,255,255)]/10 text-xs px-2 py-1 rounded">{t}</span>)}
                   </div>
 
-                  <div className="flex mt-auto">
-                    <a href={selectedProject.liveUrl} target="_blank" rel="noopener noreferrer" className="w-full text-center px-6 py-2 bg-[rgb(26,139,157)] text-white font-semibold rounded-lg hover:bg-[rgb(178,212,48)] hover:text-black transition-all duration-300">
+                  <div className="flex flex-col sm:flex-row gap-4 mt-auto">
+                    <a 
+                      href={selectedProject.liveUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="w-full text-center px-6 py-2 bg-[rgb(26,139,157)] text-white font-semibold rounded-lg hover:bg-[rgb(178,212,48)] hover:text-black transition-all duration-300 flex-1"
+                    >
                       Visit Live Site
                     </a>
+                    {selectedProject.repoUrl !== '#' && (
+                      <a 
+                        href={selectedProject.repoUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="w-full text-center px-6 py-2 bg-gray-700 text-white font-semibold rounded-lg hover:bg-gray-600 transition-all duration-300 flex-1"
+                      >
+                        View Repo
+                      </a>
+                    )}
                   </div>
                 </motion.div>
               </div>
