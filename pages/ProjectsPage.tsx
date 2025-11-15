@@ -87,7 +87,7 @@ const ProjectCard: React.FC<{ project: typeof allProjects[0]; onClick: () => voi
     exit={{ opacity: 0, scale: 0.8 }}
     transition={{ type: 'spring', stiffness: 200, damping: 25 }}
     onClick={onClick}
-    className="relative overflow-hidden rounded-lg cursor-pointer group aspect-[4/3] w-full" // FIX: Added aspect ratio for consistent card sizing
+    className="relative overflow-hidden rounded-lg cursor-pointer group aspect-[4/3] w-full"
   >
     <motion.img layoutId={`card-image-${project.title}`} src={project.img} alt={project.title} className="w-full h-full object-cover" />
     <div className="absolute inset-0 bg-black bg-opacity-50 group-hover:bg-opacity-75 transition-all duration-300 flex flex-col justify-end p-4">
@@ -141,7 +141,7 @@ const ProjectsPage: React.FC = () => {
       <AnimatePresence>
         {selectedProject && (
           <motion.div
-            className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center p-4 overflow-y-auto md:overflow-hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -149,58 +149,59 @@ const ProjectsPage: React.FC = () => {
           >
             <motion.div
               layoutId={`card-container-${selectedProject.title}`}
-              className="relative bg-[#111] border border-[rgb(26,139,157)]/50 rounded-lg overflow-hidden w-full max-w-4xl flex flex-col md:flex-row"
+              className="relative bg-[#111] border border-[rgb(26,139,157)]/50 rounded-lg overflow-hidden w-full max-w-4xl max-h-full flex flex-col md:flex-row"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="md:w-1/2 h-64 md:h-auto">
+              <div className="w-full md:w-1/2 h-48 sm:h-64 md:h-auto flex-shrink-0">
                 <motion.img layoutId={`card-image-${selectedProject.title}`} src={selectedProject.img} alt={selectedProject.title} className="w-full h-full object-cover" />
               </div>
-              <div className="p-6 md:w-1/2 flex flex-col">
-                <motion.h2 layoutId={`card-title-${selectedProject.title}`} className="text-3xl font-bold text-[rgb(178,212,48)]">{selectedProject.title}</motion.h2>
-                <p className="text-lg text-[rgb(26,139,157)] mb-4">{selectedProject.category}</p>
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.2 }}>
-                  <p className="text-[rgb(255,245,245)]/80 mb-6">{selectedProject.description}</p>
+              <div className="w-full md:w-1/2 flex flex-col">
+                <div className="p-4 sm:p-6 flex flex-col flex-1 min-h-0 overflow-y-auto">
+                  <motion.h2 layoutId={`card-title-${selectedProject.title}`} className="text-2xl sm:text-3xl font-bold text-[rgb(178,212,48)] mb-2">{selectedProject.title}</motion.h2>
+                  <p className="text-base sm:text-lg text-[rgb(26,139,157)] mb-4">{selectedProject.category}</p>
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.2 }}>
+                    <p className="text-[rgb(255,245,245)]/80 mb-6 leading-relaxed">{selectedProject.description}</p>
 
-                  <h3 className="font-bold mb-2">Key Features:</h3>
-                  <ul className="list-disc list-inside text-[rgb(255,245,245)]/70 mb-6 space-y-1">
-                    {selectedProject.keyFeatures.map(f => <li key={f}>{f}</li>)}
-                  </ul>
+                    <h3 className="font-bold mb-3 text-white">Key Features:</h3>
+                    <ul className="list-disc list-inside text-[rgb(255,245,245)]/70 mb-6 space-y-2">
+                      {selectedProject.keyFeatures.map(f => <li key={f} className="leading-relaxed">{f}</li>)}
+                    </ul>
 
-                  <h3 className="font-bold mb-2">Tech Stack:</h3>
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {selectedProject.tech.map(t => <span key={t} className="bg-[rgb(255,255,255)]/10 text-xs px-2 py-1 rounded">{t}</span>)}
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row gap-4 mt-auto">
+                    <h3 className="font-bold mb-3 text-white">Tech Stack:</h3>
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {selectedProject.tech.map(t => <span key={t} className="bg-[rgb(255,255,255)]/10 text-xs px-2 py-1 rounded">{t}</span>)}
+                    </div>
+                  </motion.div>
+                </div>
+                <div className="p-4 sm:p-6 border-t border-[rgb(26,139,157)]/20 flex flex-col sm:flex-row gap-4">
+                  <a 
+                    href={selectedProject.liveUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="w-full text-center px-6 py-2 bg-[rgb(26,139,157)] text-white font-semibold rounded-lg hover:bg-[rgb(178,212,48)] hover:text-black transition-all duration-300 flex-1"
+                  >
+                    Visit Live Site
+                  </a>
+                  {selectedProject.repoUrl !== '#' && (
                     <a 
-                      href={selectedProject.liveUrl} 
+                      href={selectedProject.repoUrl} 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="w-full text-center px-6 py-2 bg-[rgb(26,139,157)] text-white font-semibold rounded-lg hover:bg-[rgb(178,212,48)] hover:text-black transition-all duration-300 flex-1"
+                      className="w-full text-center px-6 py-2 bg-gray-700 text-white font-semibold rounded-lg hover:bg-gray-600 transition-all duration-300 flex-1"
                     >
-                      Visit Live Site
+                      View Repo
                     </a>
-                    {selectedProject.repoUrl !== '#' && (
-                      <a 
-                        href={selectedProject.repoUrl} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="w-full text-center px-6 py-2 bg-gray-700 text-white font-semibold rounded-lg hover:bg-gray-600 transition-all duration-300 flex-1"
-                      >
-                        View Repo
-                      </a>
-                    )}
-                  </div>
-                </motion.div>
+                  )}
+                </div>
               </div>
               <motion.button
                 onClick={() => setSelectedProject(null)}
-                className="absolute top-4 right-4 text-white bg-black/50 rounded-full p-2 hover:bg-white/20 transition-colors z-20"
+                className="absolute top-2 right-2 sm:top-4 sm:right-4 text-white bg-black/50 rounded-full p-1 sm:p-2 hover:bg-white/20 transition-colors z-20"
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.3 }}
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                <svg className="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
               </motion.button>
             </motion.div>
           </motion.div>
