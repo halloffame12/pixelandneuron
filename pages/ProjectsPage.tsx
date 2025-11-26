@@ -16,6 +16,16 @@ const pageTransition = {
 
 const allProjects = [
   {
+    title: 'AnonChat Live',
+    category: 'Website',
+    img: 'https://i.postimg.cc/HWyk9mDZ/anonchatweb.png',
+    description: 'AnonChat Live is a production-ready anonymous real-time chat platform built with a low-latency WebSocket architecture. It enables users to connect instantly without registration, offering seamless communication with complete privacy. Designed for speed, stability, and responsiveness across all devices.',
+    tech: ['Node.js', 'Express', 'Socket.IO', 'React (Vite)', 'Tailwind CSS'],
+    keyFeatures: ['Anonymous User Identity','Random Matchmaking System','Public Chat Rooms with Live Tracking','Fully Responsive Interface','Optimistic UI Updates'],
+    liveUrl: 'https://anonchatweb.netlify.app/',
+    repoUrl: '#',
+  },
+  {
     title: 'Portfolio site',
     category: 'Website',
     img: 'https://i.postimg.cc/cCKrHxHQ/Screenshot-2025-11-15-173651.png',
